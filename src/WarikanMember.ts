@@ -83,7 +83,7 @@ export class MemberSplitResult {
       this.id
     );
     this.payTasks.push(payTask);
-    this.balance -= amount;
+    this.balance += amount;
   }
 
   public addPayInFromTask(fromMember: MemberSplitResult, amount: number) {
@@ -96,7 +96,7 @@ export class MemberSplitResult {
       this.id
     );
     this.payTasks.push(payTask);
-    this.balance += amount;
+    this.balance -= amount;
   }
 
   constructor(member: Member, payAt: number) {

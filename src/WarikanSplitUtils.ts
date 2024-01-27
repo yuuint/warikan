@@ -31,6 +31,12 @@ export class WarikanUtils {
     return memberSplitResultArray;
   }
 
+  /**
+   * 割り勘方法（通常）：１円未満は振替なし
+   * @param membersMap
+   * @param payAt
+   * @returns
+   */
   public static basicSplit(
     membersMap: Map<string, Member>,
     payAt: number
@@ -42,22 +48,24 @@ export class WarikanUtils {
 
     // STEP1: 同額割り勘
     splitResutMap.forEach((splitFrom: MemberSplitResult) => {
-      if (splitFrom.getPayBalance() <= 0) {
+      if (splitFrom.getPayBalance() > 0) {
         // 支払い金額がない場合
         return;
       }
       splitResutMap.forEach((splitTo: MemberSplitResult) => {
         if (
           splitFrom.id !== splitTo.id &&
-          splitFrom.getPayBalance() > 0 &&
-          splitTo.getPayBalance() < 0
+          splitFrom.getPayBalance() < 0 &&
+          splitTo.getPayBalance() > 0
         ) {
           //自分のIDと異なる場合 + 支払いをしなければならない場合
-          const tradeAt = splitFrom.getPayBalance();
+          const tradeAt = Math.floor(splitFrom.getPayBalance() * -1);
           if (splitFrom.getPayBalance() + splitTo.getPayBalance() === 0) {
             // 同じ金額の場合相殺する
-            splitFrom.addPayOutToTask(splitTo, tradeAt);
-            splitTo.addPayInFromTask(splitFrom, tradeAt);
+            if (!!tradeAt) {
+              splitFrom.addPayOutToTask(splitTo, tradeAt);
+              splitTo.addPayInFromTask(splitFrom, tradeAt);
+            }
           }
         }
       });
@@ -65,25 +73,27 @@ export class WarikanUtils {
 
     // STEP2: 同額割り勘
     splitResutMap.forEach((splitFrom: MemberSplitResult) => {
-      if (splitFrom.getPayBalance() <= 0) {
+      if (splitFrom.getPayBalance() > 0) {
         // 支払い金額がない場合
         return;
       }
       splitResutMap.forEach((splitTo: MemberSplitResult) => {
         if (
           splitFrom.id !== splitTo.id &&
-          splitFrom.getPayBalance() > 0 &&
-          splitTo.getPayBalance() < 0
+          splitFrom.getPayBalance() < 0 &&
+          splitTo.getPayBalance() > 0
         ) {
           //自分のIDと異なる場合 + 支払いをしなければならない場合
           let tradeAt = 0;
-          if (splitFrom.getPayBalance() + splitTo.getPayBalance() >= 0) {
-            tradeAt = splitTo.getPayBalance() * -1;
+          if (splitFrom.getPayBalance() + splitTo.getPayBalance() < 0) {
+            tradeAt = Math.floor(splitTo.getPayBalance());
           } else {
-            tradeAt = splitFrom.getPayBalance();
+            tradeAt = Math.floor(splitFrom.getPayBalance() * -1);
           }
-          splitFrom.addPayOutToTask(splitTo, tradeAt);
-          splitTo.addPayInFromTask(splitFrom, tradeAt);
+          if (!!tradeAt) {
+            splitFrom.addPayOutToTask(splitTo, tradeAt);
+            splitTo.addPayInFromTask(splitFrom, tradeAt);
+          }
         }
       });
     });

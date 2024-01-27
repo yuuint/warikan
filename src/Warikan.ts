@@ -83,6 +83,10 @@ export class Warikan {
     return this.getMembersTotalDrAmount() / this.getMemberCount();
   }
 
+  getMembersCrAt(): number {
+    return this.getMembersTotalCrAmount() / this.getMemberCount();
+  }
+
   getMembersTotalDrAmount() {
     let totalAmount: number = 0;
     this.membersMap.forEach((member: Member) => {
@@ -115,10 +119,18 @@ export class Warikan {
     return resMembers;
   }
 
+  /**
+   * 割り勘方法（通常）：１円未満は振替なし
+   * @returns
+   */
   getSplitResultsByArray(): Array<MemberSplitResult> {
-    return WarikanUtils.basicSplit(this.membersMap, this.getMembersDrAt());
+    return WarikanUtils.basicSplit(this.membersMap, this.getMembersCrAt() * -1);
   }
 
+  /**
+   * 割り勘方法（通常）：１円未満は振替なし
+   * @returns
+   */
   getSplitResultsByMap(): Map<string, MemberSplitResult> {
     let resResultsMap: Map<string, MemberSplitResult> = new Map<
       string,
@@ -126,7 +138,7 @@ export class Warikan {
     >();
     const splitResults = WarikanUtils.basicSplit(
       this.membersMap,
-      this.getMembersDrAt()
+      this.getMembersCrAt() * -1
     );
     splitResults.forEach((spritResult: MemberSplitResult) => {
       resResultsMap.set(spritResult.id, spritResult);

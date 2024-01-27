@@ -38,7 +38,7 @@ export class PayItemUtils {
   }
 
   getTotalAmount(): number {
-    return this.getCrTotalAmount() - this.getDrTotalAmount();
+    return this.getCrTotalAmount() + this.getDrTotalAmount();
   }
 
   addPayTrade(itemTile: string, amount: number) {
