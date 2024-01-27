@@ -1,6 +1,6 @@
 {
   "name": "@ynetlabo/warikan",
-  "version": "1.0.02",
+  "version": "1.0.03",
   "description": "a tool for the npm package to easily split the bill.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
