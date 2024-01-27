@@ -9,6 +9,10 @@
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuuint/warikan.git"
+  },
   "author": "Y.NetLabo",
   "license": "MIT",
   "dependencies": {
