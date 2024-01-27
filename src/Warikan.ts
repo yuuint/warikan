@@ -115,7 +115,22 @@ export class Warikan {
     return resMembers;
   }
 
-  getSplitResults(): Array<MemberSplitResult> {
+  getSplitResultsByArray(): Array<MemberSplitResult> {
     return WarikanUtils.basicSplit(this.membersMap, this.getMembersDrAt());
+  }
+
+  getSplitResultsByMap(): Map<string, MemberSplitResult> {
+    let resResultsMap: Map<string, MemberSplitResult> = new Map<
+      string,
+      MemberSplitResult
+    >();
+    const splitResults = WarikanUtils.basicSplit(
+      this.membersMap,
+      this.getMembersDrAt()
+    );
+    splitResults.forEach((spritResult: MemberSplitResult) => {
+      resResultsMap.set(spritResult.id, spritResult);
+    });
+    return resResultsMap;
   }
 }
