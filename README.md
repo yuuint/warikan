@@ -74,3 +74,68 @@ Array<MemberSplitResult>型で取得できます
 ```
 const results = warikanUtil.getSplitResultsByArray();
 ```
+
+### *.Sample
+```
+console.log(JSON.stringify(results, null, 2));
+```
+result.payTasks:誰から／誰にの割り勘タスク（メンバーごと）
+```
+[
+  {
+    "totalCr": 0,
+    "totalDr": 6000,
+    "totalAmount": 6000,
+    "balance": 0,
+    "balanceInit": 4000,
+    "payAt": -2000,
+    "payTasks": [
+      {
+        "fromId": "unique-key3",
+        "fromName": "setsuko",
+        "toId": "unique-key1",
+        "toName": "yuuko",
+        "amount": 4000,
+        "createAt": "unique-key1",
+        "isPayOutTask": false,
+        "isPayInTask": true
+      }
+    ],
+    "id": "unique-key1",
+    "name": "yuuko"
+  },
+  {
+    "totalCr": 2000,
+    "totalDr": 0,
+    "totalAmount": 2000,
+    "balance": 0,
+    "balanceInit": 0,
+    "payAt": -2000,
+    "payTasks": [],
+    "id": "unique-key2",
+    "name": "takeko"
+  },
+  {
+    "totalCr": -2000,
+    "totalDr": 0,
+    "totalAmount": -2000,
+    "balance": 0,
+    "balanceInit": -4000,
+    "payAt": -2000,
+    "payTasks": [
+      {
+        "fromId": "unique-key3",
+        "fromName": "setsuko",
+        "toId": "unique-key1",
+        "toName": "yuuko",
+        "amount": 4000,
+        "createAt": "unique-key3",
+        "isPayOutTask": true,
+        "isPayInTask": false
+      }
+    ],
+    "id": "unique-key3",
+    "name": "setsuko"
+  }
+]
+```
