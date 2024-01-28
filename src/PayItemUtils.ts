@@ -61,10 +61,8 @@ export class PayItemUtils {
     switch (itemTitle.substring(0, 3)) {
       case PayItem.CR_ITEM_PREFIX:
         return this.payCrItem;
-        break;
       case PayItem.DR_ITEM_PREFIX:
         return this.payDrItem;
-        break;
       default:
         throw new Error(
           "ItemTitle must be defined using the PREFIX defined for PayItem."

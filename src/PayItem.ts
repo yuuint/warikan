@@ -46,7 +46,7 @@ export class PayItem {
 
   clearAllItemAmount() {
     this.payItemMap.forEach((val, key) => {
-      val = 0;
+      this.payItemMap.set(key, 0);
     });
   }
 

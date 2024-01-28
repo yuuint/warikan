@@ -80,11 +80,19 @@ export class Warikan {
   }
 
   getMembersDrAt(): number {
-    return this.getMembersTotalDrAmount() / this.getMemberCount();
+    if (!!this.getMemberCount()) {
+      return this.getMembersTotalDrAmount() / this.getMemberCount() ?? 0;
+    } else {
+      return 0;
+    }
   }
 
   getMembersCrAt(): number {
-    return this.getMembersTotalCrAmount() / this.getMemberCount();
+    if (!!this.getMemberCount()) {
+      return this.getMembersTotalCrAmount() / this.getMemberCount();
+    } else {
+      return 0;
+    }
   }
 
   getMembersTotalDrAmount() {
@@ -111,20 +119,12 @@ export class Warikan {
     return resMembers;
   }
 
-  getMembersByStringArray(): string[] {
-    let resMembers: string[] = [];
-    this.membersMap.forEach((member) => {
-      resMembers.push(member.id);
-    });
-    return resMembers;
-  }
-
   /**
    * 割り勘方法（通常）：１円未満は振替なし
    * @returns
    */
   getSplitResultsByArray(): Array<MemberSplitResult> {
-    return WarikanUtils.basicSplit(this.membersMap, this.getMembersCrAt() * -1);
+    return WarikanUtils.basicSplit(this.membersMap, this.getMembersDrAt() * -1);
   }
 
   /**
@@ -138,7 +138,7 @@ export class Warikan {
     >();
     const splitResults = WarikanUtils.basicSplit(
       this.membersMap,
-      this.getMembersCrAt() * -1
+      this.getMembersDrAt() * -1
     );
     splitResults.forEach((spritResult: MemberSplitResult) => {
       resResultsMap.set(spritResult.id, spritResult);
